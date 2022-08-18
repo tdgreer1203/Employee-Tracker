@@ -4,7 +4,8 @@ const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
-const myStaff = [];
+const engineers = [];
+const interns = [];
 
 const promptForManager = () => {
     return inquirer.prompt([
@@ -63,6 +64,120 @@ const promptForManager = () => {
     ]);
 };
 
+const promptForEngineer = () => {
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: "What is the team engineer's name? (Required)",
+            validate: nameInput => {
+                if(nameInput) {
+                    return true;
+                } else {
+                    console.log('Please enter the name of the engineer.');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: "What is the engineer's employee ID? (Required)",
+            validate: idInput => {
+                if(idInput) {
+                    return true;
+                } else {
+                    console.log('Please enter the employee ID of the engineer.');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: "What is the engineer's email address? (Required)",
+            validate: emailInput => {
+                if(emailInput) {
+                    return true;
+                } else {
+                    console.log('Please enter the email address of the engineer.');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'github',
+            message: "What is the engineer's Github username? (Required)",
+            validate: githubInput => {
+                if(githubInput) {
+                    return true;
+                } else {
+                    console.log('Please enter the Github username of the engineer.');
+                    return false;
+                }
+            }
+        }
+    ]);
+};
+
+const promptForIntern = () => {
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: "What is the team intern's name? (Required)",
+            validate: nameInput => {
+                if(nameInput) {
+                    return true;
+                } else {
+                    console.log('Please enter the name of the intern.');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: "What is the intern's employee ID? (Required)",
+            validate: idInput => {
+                if(idInput) {
+                    return true;
+                } else {
+                    console.log('Please enter the employee ID of the intern.');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: "What is the intern's email address? (Required)",
+            validate: emailInput => {
+                if(emailInput) {
+                    return true;
+                } else {
+                    console.log('Please enter the email address of the intern.');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'school',
+            message: "What school does the intern attend? (Required)",
+            validate: schoolInput => {
+                if(schoolInput) {
+                    return true;
+                } else {
+                    console.log('Please enter the school of the intern.');
+                    return false;
+                }
+            }
+        }
+    ]);
+};
+
 const promptForNextStep = () => {
     return inquirer.prompt([
         {
@@ -77,11 +192,20 @@ const promptForNextStep = () => {
 async function getTeam() {
     let isFinished = false;
     let manager = await promptForManager();
-    myStaff.push(manager);
 
     while(!isFinished) {
-        
+        let next = await promptForNextStep();
+        if(next.next === "Add an Engineer") {
+            let engineer = await promptForEngineer();
+            engineers.push(engineer);
+        } else if(next.next === "Add an Intern") {
+            let intern = await promptForIntern();
+            interns.push(intern);
+        } else {
+            isFinished = true;
+        }
     }
+    console.log(myStaff);
 }
 
 getTeam();
