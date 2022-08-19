@@ -3,9 +3,10 @@ const inquirer = require('inquirer');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+const writeFile = require('./utils/write-file');
+const generateHtml = require('./src/generate-html');
 
-const engineers = [];
-const interns = [];
+const myStaff = [];
 
 const promptForManager = () => {
     return inquirer.prompt([
@@ -184,7 +185,7 @@ const promptForNextStep = () => {
             type: 'list',
             name: 'next',
             message: 'What would you like to do next?',
-            choices: ['Add an Engineer', 'Add an Intern', 'I"m Done. Get me out of here.'],
+            choices: ['Add an Engineer', 'Add an Intern', "I'm Done. Get me out of here."],
         }
     ]);
 };
@@ -192,20 +193,26 @@ const promptForNextStep = () => {
 async function getTeam() {
     let isFinished = false;
     let manager = await promptForManager();
+    let newManager = new Manager(manager.name, manager.id, manager.email, manager.office);
+    myStaff.push(newManager);
 
     while(!isFinished) {
         let next = await promptForNextStep();
         if(next.next === "Add an Engineer") {
             let engineer = await promptForEngineer();
-            engineers.push(engineer);
+            let newEngineer = new Engineer(engineer.name, engineer.id, engineer.email, engineer.github);
+            myStaff.push(newEngineer);
         } else if(next.next === "Add an Intern") {
             let intern = await promptForIntern();
-            interns.push(intern);
+            let newIntern = new Intern(intern.name, intern.id, intern.email, intern.school);
+            myStaff.push(newIntern);
         } else {
             isFinished = true;
         }
     }
-    console.log(myStaff);
+    
+    let pageContent = await generateHtml(myStaff);
+    writeFile(pageContent);
 }
 
 getTeam();
