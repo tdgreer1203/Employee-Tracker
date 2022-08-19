@@ -30,7 +30,7 @@ module.exports = staffArray => {
         <span class="navbar-brand h1 ml-auto mr-auto">My Team</span>
       </nav>
       <div class="container">
-        <div class="row d-flex justify-content-center col-sm-1 col-md-2 col-lg-3">
+        <div class="row d-flex justify-content-center col-sm-12 col-md-12 col-lg-12">
           ${generateCards(staffArray)}
         </div>
       </div>
