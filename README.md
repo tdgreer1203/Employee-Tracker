@@ -22,6 +22,10 @@ This project allows a team lead to see their entire team in one screen. They sim
 While completing this project, I learned how to bring several disciplines of full-stack development together, to produce a final product. As stated earlier, this project drew on front-end knowledge, css, responsive design, and Node JS concepts. The Inquirer plugin was used to prompt the user for the information used to build the team members cards. 
 
 
+## Walkthrough
+[Video](https://youtu.be/Ver6UJZQWS0)
+
+
 
 ## Built With
 ------
